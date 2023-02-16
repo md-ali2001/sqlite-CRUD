@@ -13,9 +13,24 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         databaseHandler = DatabaseHandler(this)
-        databaseHandler!!.add("lllll")
+        databaseHandler!!.add("ali masood","e")
+        databaseHandler!!.add("sohaib bin amir","w")
+        databaseHandler!!.add("ayan hussain","s")
+        databaseHandler!!.add("ammar abid","d")
         val names = databaseHandler!!.get()
-        //for (i in names.indices) Log.d("returned", names[i].name)
+        for (i in names.indices)
+        {
+            val name=names[i].name
+            val e=names[i].age
+
+
+            if (name != null) {
+                Log.d("returned",name+" age:"+e )
+            }
+
+        }
+
+
     }
 
     fun adddata(newitem: String?) {}
