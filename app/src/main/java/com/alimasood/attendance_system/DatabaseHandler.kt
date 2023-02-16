@@ -1,18 +1,15 @@
 package com.alimasood.attendance_system
 
-import android.database.sqlite.SQLiteOpenHelper
-import com.alimasood.attendance_system.DatabaseHandler
-import android.database.sqlite.SQLiteDatabase
 import android.content.ContentValues
 import android.content.Context
-import android.os.FileObserver.CREATE
-import com.alimasood.attendance_system.readdata
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
 import java.util.*
 
 class DatabaseHandler(context: Context?) : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
     var DB: SQLiteDatabase
     override fun onCreate(db: SQLiteDatabase) {
-        db.execSQL("CREATE TABLE ${TABLE_NAME} ($COLUMN_ID TEXT,$COLUMN_ID2 TEXT)")
+        db.execSQL("CREATE TABLE ${TABLE_NAME} ($pk INTEGER PRIMARY KEY, $COLUMN_ID TEXT,$COLUMN_ID2 TEXT)")
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldversion: Int, newversion: Int) {
@@ -22,8 +19,14 @@ class DatabaseHandler(context: Context?) : SQLiteOpenHelper(context, DB_NAME, nu
 
     }
 
-    fun add(item: String?,attendance: Int?): Boolean {
+    fun update(id : Int? , newattendance : Int) {
+        val st= "UPDATE $TABLE_NAME SET $COLUMN_ID2 = $newattendance WHERE $pk = $id";
+        DB.execSQL(st)
+    }
+
+    fun add(primarykey:Int,item: String?,attendance: Int?): Boolean {
         val contentValues = ContentValues()
+        contentValues.put(pk, primarykey)
         contentValues.put(COLUMN_ID, item)
         contentValues.put(COLUMN_ID2, attendance)
 
@@ -39,8 +42,9 @@ class DatabaseHandler(context: Context?) : SQLiteOpenHelper(context, DB_NAME, nu
         val names = ArrayList<readdata>()
         while (cursor.moveToNext()) {
             val r = readdata()
-            r.name = cursor.getString(0)
-            r.attendance=cursor.getInt(1)
+            r.primarykey = cursor.getInt(0)
+            r.name = cursor.getString(1)
+            r.attendance=cursor.getInt(2)
 
             names.add(r)
         }
@@ -49,8 +53,9 @@ class DatabaseHandler(context: Context?) : SQLiteOpenHelper(context, DB_NAME, nu
 
     companion object {
         private const val DB_VERSION = 1
-        private const val DB_NAME = "attendance99.db"
-        private const val TABLE_NAME = "attendancetable2"
+        private const val DB_NAME = "attendance8.db"
+        private const val TABLE_NAME = "attendancetable"
+        private const val pk = "pk"
         private const val COLUMN_ID = "students"
         private const val COLUMN_ID2 = "attendance"
     }

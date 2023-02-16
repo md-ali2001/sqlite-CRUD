@@ -13,26 +13,27 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         databaseHandler = DatabaseHandler(this)
-        databaseHandler!!.add("sohaib amir",9)
+      // databaseHandler!!.add(18, "ohaib amir",0)
 
 
         val names = databaseHandler!!.get()
         for (i in names.indices) {
+            val id=names[i].primarykey
             val name = names[i].name
             val e=names[i].attendance
 
 
 
             if (name != null) {
-                Log.d("returned", name+" attendance "+ e )
+                Log.d("data", "id:" +id+ "  name:"+name+" attendance :"+ e )
             }
 
         }
 
-        Log.d("returned", "\n\n")
+        Log.d("data", "\n\n")
 
         //val names = databaseHandler!!.get()
-        present("ali masood")
+        present(1)
 
 
 
@@ -41,17 +42,20 @@ class MainActivity : AppCompatActivity() {
 
     fun adddata(newitem: String?) {}
 
-    fun present(studentname:String?)
+    fun present(studentid:Int?)
     {
         val names = databaseHandler!!.get()
         for(i in names.indices)
 
         {
-            if(names[i].name==studentname)
+            if(names[i].primarykey==studentid)
             {
                 var num=names[i].attendance
                num= num?.plus(1)
-                databaseHandler!!.add("inc",num)
+                if (num != null) {
+                    databaseHandler!!.update(names[i].primarykey,num)
+                }
+
 
 
             }
@@ -64,13 +68,14 @@ class MainActivity : AppCompatActivity() {
         databaseHandler = DatabaseHandler(this)
         val names = databaseHandler!!.get()
         for (i in names.indices) {
+            val id=names[i].primarykey
             val name = names[i].name
             val e=names[i].attendance
 
 
 
             if (name != null) {
-                Log.d("returned", name+" attendance "+ e )
+                Log.d("data", "id :" +id+ "name : "+name+" attendance "+ e )
             }
 
         }
