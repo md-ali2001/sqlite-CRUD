@@ -22,10 +22,10 @@ class DatabaseHandler(context: Context?) : SQLiteOpenHelper(context, DB_NAME, nu
 
     }
 
-    fun add(item: String?,age: String?): Boolean {
+    fun add(item: String?,attendance: Int?): Boolean {
         val contentValues = ContentValues()
         contentValues.put(COLUMN_ID, item)
-        contentValues.put(COLUMN_ID2, age)
+        contentValues.put(COLUMN_ID2, attendance)
 
         val result = DB.insert(TABLE_NAME, null, contentValues)
         return if (result == -1L) {
@@ -40,7 +40,7 @@ class DatabaseHandler(context: Context?) : SQLiteOpenHelper(context, DB_NAME, nu
         while (cursor.moveToNext()) {
             val r = readdata()
             r.name = cursor.getString(0)
-            r.age=cursor.getString(1)
+            r.attendance=cursor.getInt(1)
 
             names.add(r)
         }
@@ -49,10 +49,10 @@ class DatabaseHandler(context: Context?) : SQLiteOpenHelper(context, DB_NAME, nu
 
     companion object {
         private const val DB_VERSION = 1
-        private const val DB_NAME = "attendance4.db"
+        private const val DB_NAME = "attendance99.db"
         private const val TABLE_NAME = "attendancetable2"
         private const val COLUMN_ID = "students"
-        private const val COLUMN_ID2 = "AGE"
+        private const val COLUMN_ID2 = "attendance"
     }
 
     init {
