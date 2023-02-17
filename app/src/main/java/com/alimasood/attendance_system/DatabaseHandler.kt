@@ -19,9 +19,19 @@ class DatabaseHandler(context: Context?) : SQLiteOpenHelper(context, DB_NAME, nu
 
     }
 
+    fun delete(id:Int?) {
+
+        DB.execSQL("DELETE FROM $TABLE_NAME WHERE $pk=$id")
+    }
+
     fun update(id : Int? , newattendance : Int) {
         val st= "UPDATE $TABLE_NAME SET $COLUMN_ID2 = $newattendance WHERE $pk = $id";
         DB.execSQL(st)
+    }
+
+    fun closedb()
+    {
+        DB.close()
     }
 
     fun add(primarykey:Int,item: String?,attendance: Int?): Boolean {

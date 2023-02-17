@@ -13,7 +13,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         databaseHandler = DatabaseHandler(this)
-      // databaseHandler!!.add(18, "ohaib amir",0)
 
 
         val names = databaseHandler!!.get()
@@ -29,18 +28,25 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
+//        databaseHandler!!.add(90, "oaib amir",0)
+//        databaseHandler!!.add(97, "oaib ir",4)
+
 
         Log.d("data", "\n\n")
+        showdata()
+
 
         //val names = databaseHandler!!.get()
-        present(1)
+       // present(1)
 
-
+databaseHandler!!.delete(90)
+        showdata()
+        databaseHandler!!.closedb()
 
 
     }
 
-    fun adddata(newitem: String?) {}
+
 
     fun present(studentid:Int?)
     {
@@ -75,7 +81,7 @@ class MainActivity : AppCompatActivity() {
 
 
             if (name != null) {
-                Log.d("data", "id :" +id+ "name : "+name+" attendance "+ e )
+                Log.d("data", "id :" +id+ " name : "+name+" attendance "+ e )
             }
 
         }
